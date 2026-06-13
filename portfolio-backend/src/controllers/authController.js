@@ -30,10 +30,11 @@ export const loginAdmin = async (req, res) => {
 
     const token = generateToken(admin._id)
 
+    const isProd = process.env.NODE_ENV === 'production'
     res.cookie('adminToken', token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
 
@@ -52,8 +53,11 @@ export const loginAdmin = async (req, res) => {
 
 export const logoutAdmin = async (req, res) => {
   try {
+    const isProd = process.env.NODE_ENV === 'production'
     res.cookie('adminToken', '', {
       httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       expires: new Date(0),
     })
 
