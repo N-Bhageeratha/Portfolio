@@ -62,6 +62,7 @@ export default function AdminDashboardLayout({
 
   const handleLogout = async () => {
     await adminAPI.logout()
+    document.cookie = 'adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax; Secure'
     router.push('/admin')
   }
 

@@ -46,6 +46,9 @@ export default function AdminLoginPage() {
 
       if (data) {
         setStatus('idle')
+        if (data.token) {
+          document.cookie = `adminToken=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax; Secure`
+        }
         router.push('/admin/dashboard')
       }
     } catch {
